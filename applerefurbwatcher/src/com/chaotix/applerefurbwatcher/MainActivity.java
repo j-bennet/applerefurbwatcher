@@ -3,6 +3,7 @@ package com.chaotix.applerefurbwatcher;
 import java.util.List;
 
 import com.chaotix.applerefurbwatcher.data.ImageButtonData;
+import com.chaotix.applerefurbwatcher.data.ProductData;
 import com.chaotix.applerefurbwatcher.helpers.AppleUrlManager;
 import com.chaotix.applerefurbwatcher.helpers.ImageDownloader;
 import com.chaotix.applerefurbwatcher.helpers.ImageDownloader.Mode;
@@ -11,6 +12,7 @@ import com.chaotix.applerefurbwatcher.helpers.ResourceManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -18,40 +20,38 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-
+/**
+ * Scheme colors from: http://www.colourlovers.com/palette/196488/Mod_Mod_Mod_Mod 
+ * 
+ **/
 public class MainActivity extends Activity {
 	
 	private static final String tag = "MainActivity";
-	
-	private static final int NAV_BUTTON_OFFSET = 100;
-
 	private static final ImageDownloader imageDownloader = new ImageDownloader();
-	
-	private static int[] imageButtonIds = null;
-	
 	private static View progress = null;
 
+	private class GetNavTask extends AsyncTask<Void, Void, ImageButtonData[]> {
+		
+		protected void onPostExecute(ImageButtonData[] result) {
+			progress.setVisibility(View.GONE);
+			createNavigationButtons(result);
+		}
+
+		@Override
+		protected ImageButtonData[] doInBackground(Void... arg) {
+			return AppleUrlManager.getInstance().getNavigationData();
+		}
+	}
+    
 	private OnClickListener navClickListener = new OnClickListener() {
 		
         @Override
         public void onClick(View v) {
         	ImageButtonData imageTag = (ImageButtonData) v.getTag();
             Log.d(tag, "URL clicked: " + imageTag.Url);
+            startListActivity(imageTag.Url);
         }
     };
-    
-	private class GetNavTask extends AsyncTask<Void, Void, List<ImageButtonData>> {
-		
-		protected void onPostExecute(List<ImageButtonData> result) {
-			progress.setVisibility(View.GONE);
-			createNavigationButtons(result);
-		}
-
-		@Override
-		protected List<ImageButtonData> doInBackground(Void... arg0) {
-			return AppleUrlManager.getInstance().getNavigationData();
-		}
-	}
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         initializeManagers();
         createNavigation();
+    }
+    
+    private void startListActivity(String url) {
+        Intent intent = new Intent(this, ProductListActivity.class);
+        intent.putExtra(ProductListActivity.EXTRA_URL, url);
+        startActivity(intent);
     }
     
     private void initializeManagers() {
@@ -72,16 +78,13 @@ public class MainActivity extends Activity {
 		progress.setVisibility(View.VISIBLE);
 		new GetNavTask().execute();
 	}
-    
-    private void createNavigationButtons(List<ImageButtonData> buttonData) {
+	
+    private void createNavigationButtons(ImageButtonData[] buttonData) {
 		LinearLayout llMain = (LinearLayout) findViewById(R.id.llMain);
-		imageButtonIds = new int[buttonData.size()];
 
-		int i = 0;
-    	for (ImageButtonData navData: buttonData) {
-    		int buttonId = NAV_BUTTON_OFFSET + i;
+    	for (int i = 0; i < buttonData.length; i++) {
+    		ImageButtonData navData = buttonData[i];
     		Button button = new Button(this);
-    		button.setId(buttonId);
     		button.setTag(navData);
     		button.setClickable(true);
     		button.setOnClickListener(navClickListener);
@@ -92,8 +95,6 @@ public class MainActivity extends Activity {
     		button.setLayoutParams(params);
     		llMain.addView(button);
             imageDownloader.download(navData.ImageUrl, button);
-            imageButtonIds[i] = buttonId;
-            i++;
     	}
     }
 
