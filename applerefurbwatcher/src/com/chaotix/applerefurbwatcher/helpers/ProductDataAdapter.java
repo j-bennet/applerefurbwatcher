@@ -35,6 +35,7 @@ public class ProductDataAdapter extends ArrayAdapter<ProductData> {
 			row = inflater.inflate(layoutResourceId, parent, false);
 
 			holder = new ProductDataHolder();
+			holder.txtHeader = (TextView) row.findViewById(R.id.txtHeader);
 			holder.txtSpecs = (TextView) row.findViewById(R.id.txtSpecs);
 			holder.txtPrice = (TextView) row.findViewById(R.id.txtPrice);
 			holder.txtSavings = (TextView) row.findViewById(R.id.txtSavings);
@@ -45,7 +46,8 @@ public class ProductDataAdapter extends ArrayAdapter<ProductData> {
 		}
 
 		ProductData item = data[position];
-		holder.txtSpecs.setText(Html.fromHtml(item.Specs));
+		holder.txtHeader.setText(item.Header);
+		holder.txtSpecs.setText(item.Specs);
 		holder.txtPrice.setText(Html.fromHtml(item.Price));
 		if (item.Savings != null) {
 			holder.txtSavings.setText(Html.fromHtml(item.Savings));
@@ -55,6 +57,7 @@ public class ProductDataAdapter extends ArrayAdapter<ProductData> {
 	}
 
 	private static class ProductDataHolder {
+		TextView txtHeader;
 		TextView txtSpecs;
 		TextView txtPrice;
 		TextView txtSavings;

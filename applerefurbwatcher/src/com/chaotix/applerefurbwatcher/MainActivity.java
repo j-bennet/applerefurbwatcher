@@ -1,18 +1,9 @@
 package com.chaotix.applerefurbwatcher;
 
-import java.util.List;
-
-import com.chaotix.applerefurbwatcher.data.ImageButtonData;
-import com.chaotix.applerefurbwatcher.data.ProductData;
-import com.chaotix.applerefurbwatcher.helpers.AppleUrlManager;
-import com.chaotix.applerefurbwatcher.helpers.ImageDownloader;
-import com.chaotix.applerefurbwatcher.helpers.ImageDownloader.Mode;
-import com.chaotix.applerefurbwatcher.helpers.ResourceManager;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -20,6 +11,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+
+import com.chaotix.applerefurbwatcher.data.ImageButtonData;
+import com.chaotix.applerefurbwatcher.helpers.AppleUrlManager;
+import com.chaotix.applerefurbwatcher.helpers.ImageDownloader;
+import com.chaotix.applerefurbwatcher.helpers.ImageDownloader.Mode;
+import com.chaotix.applerefurbwatcher.helpers.ResourceManager;
 /**
  * Scheme colors from: http://www.colourlovers.com/palette/196488/Mod_Mod_Mod_Mod 
  * 
