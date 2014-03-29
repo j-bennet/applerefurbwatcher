@@ -21,7 +21,9 @@ public class AppleUrlManager {
 	private static final String tag = "AppleUrlManager";
 	private static final AppleUrlManager instance = new AppleUrlManager();
 	private static String baseUrl = null;
-	private static String separator = System.getProperty("line.separator");
+	
+	private static final String newline = System.getProperty("line.separator");
+	private static final String bullet = "\u2022";
 
 	private AppleUrlManager() {
 	}
@@ -89,7 +91,7 @@ public class AppleUrlManager {
 		for (TextNode node : specsParent.textNodes()) {
 			String text = node.getWholeText().trim();
 			if (text.length() > 0) {
-				specs.append("\u2022 " + text + separator);
+				specs.append(bullet).append(" ").append(text).append(newline);
 			}
 		}
 

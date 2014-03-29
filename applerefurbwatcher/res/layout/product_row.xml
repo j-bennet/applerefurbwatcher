@@ -13,7 +13,7 @@
             android:id="@+id/txtHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="2dp"
+            android:padding="5dp"
             android:text="Refurbished 11.6-inch MacBook Air 1.3GHz dual-core Intel Core i5"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
-                android:padding="2dp"
+	            android:padding="5dp"
                 android:text="Originally released June 2013
 11.6-inch (diagonal) LED-backlit glossy widescreen display
 1366-by-768 resolution"
@@ -43,7 +43,7 @@
                     android:id="@+id/txtPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="2dp"
+		            android:padding="2dp"
                     android:text="$555.99"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textStyle="bold" />
@@ -52,7 +52,7 @@
                     android:id="@+id/txtSavings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="2dp"
+		            android:padding="2dp"
                     android:text="Save $170.00
 15% off"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
